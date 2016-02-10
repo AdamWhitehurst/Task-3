@@ -1,5 +1,6 @@
 #include<string>
 #include<iostream>
+
 using namespace std;
 
 class Car {
@@ -10,8 +11,8 @@ public:
 	struct data_car {
 		string vehicle_name = "";
 		int terrain = 0;
-		float speed = 0.0;
-		float tank_level = 0.0;
+		double speed = 0.0;
+		double tank_level = 0.0;
 	}myCar;
 private:
 	void simulator_input(data_car*);
@@ -35,19 +36,19 @@ void Car::API()
 	run_simulator(&myCar);
 }
 
-void Car::simulator_input(data_car* car)
+void Car::simulator_input(data_car* myCar)
 {
 	cout << "Name your car, speedster!" << endl;
-	cin >> car->vehicle_name;
+	cin >> myCar->vehicle_name;
 	cout << "How tough is the terrain?? (1: easy, 2: tough, 3: really hard) ";
-	while (!(car->terrain == 1 || car->terrain == 2 || car->terrain == 3)) {
+	while (!(myCar->terrain == 1 || myCar->terrain == 2 || myCar->terrain == 3)) {
 		try {
-			cin >> car->terrain;
+			cin >> myCar->terrain;
 		}
 		catch (exception e) {
 			cout << "Invalid terrain!" << endl;
 		}
-		if (!(car->terrain == 1 || car->terrain == 2 || car->terrain == 3)) {
+		if (!(myCar->terrain == 1 || myCar->terrain == 2 || myCar->terrain == 3)) {
 			cout << "That's not an allowed terrain toughness, try another! ";
 		}
 	}
@@ -67,18 +68,18 @@ void Car::simulator_input(data_car* car)
 	}
 	switch (input) {
 	case 1:
-		car->speed = 0.3;
+		myCar->speed = 0.3;
 		break;
 	case 2:
-		car->speed = 0.6;
+		myCar->speed = 0.6;
 		break;
 	case 3:
-		car->speed = 0.8;
+		myCar->speed = 0.8;
 		break;
 	}
 
 	cout << "How much fuel do you have?? (1: 100%, 2. 80%, 3. 50%) ";
-	int input = 0;
+	input = 0;
 	while (!(input == 1 || input == 2 || input == 3)) {
 		try {
 			cin >> input;
@@ -92,24 +93,27 @@ void Car::simulator_input(data_car* car)
 	}
 	switch (input) {
 	case 1:
-		car->tank_level = 100.0;
+		myCar->tank_level = 100.0;
 		break;
 	case 2:
-		car->tank_level = 80.0;
+		myCar->tank_level = 80.0;
 		break;
 	case 3:
-		car->tank_level = 50.0;
+		myCar->tank_level = 50.0;
 		break;
 	}
 }
 
-void Car::run_simulator(data_car* car)
+void Car::run_simulator(data_car* myCar)
 {
-	// *(car->tank_level) -= car->speed * car->terrain;
-	// if (tank_level < .01)
+	while (myCar->tank_level > .01) {
+		cout << "New tank level: " << myCar->tank_level << endl;
+		myCar->tank_level -= myCar->speed * myCar->terrain;
+	}
 }
 
 int main() {
 	Car car;
 	return 0;
+	
 }
