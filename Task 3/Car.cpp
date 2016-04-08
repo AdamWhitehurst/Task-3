@@ -1,24 +1,4 @@
-#include<string>
-#include<iostream>
-
-using namespace std;
-
-class Car {
-public:
-	Car();
-	~Car();
-	void API();
-	struct data_car {
-		string vehicle_name = "";
-		int terrain = 0;
-		double speed = 0.0;
-		double tank_level = 0.0;
-	}myCar;
-private:
-	void simulator_input(data_car*);
-	void run_simulator(data_car*);
-};
-
+#include "Car.h"
 
 Car::Car()
 {
@@ -32,38 +12,38 @@ Car::~Car()
 
 void Car::API()
 {
-	simulator_input(&myCar);
-	run_simulator(&myCar);
+	SimulatorInput(&myCar);
+	RunSimulator(&myCar);
 }
 
-void Car::simulator_input(data_car* myCar)
+void Car::SimulatorInput(carData* myCar)
 {
-	cout << "Name your car, speedster!" << endl;
-	cin >> myCar->vehicle_name;
-	cout << "How tough is the terrain?? (1: easy, 2: tough, 3: really hard) ";
+	std::cout << "Name your car, speedster!\n";
+	std::getline(std::cin, myCar->vehicleName);
+	std::cout << "How tough is the terrain?? (1: easy, 2: tough, 3: really hard) ";
 	while (!(myCar->terrain == 1 || myCar->terrain == 2 || myCar->terrain == 3)) {
 		try {
-			cin >> myCar->terrain;
+			std::cin >> myCar->terrain;
 		}
-		catch (exception e) {
-			cout << "Invalid terrain!" << endl;
+		catch (std::exception e) {
+			std::cout << "Invalid terrain!\n";
 		}
 		if (!(myCar->terrain == 1 || myCar->terrain == 2 || myCar->terrain == 3)) {
-			cout << "That's not an allowed terrain toughness, try another! ";
+			std::cout << "That's not an allowed terrain toughness, try another! ";
 		}
 	}
 
-	cout << "How fast do you go?? (1: slow, 2: medium, 3: fast!)";
+	std::cout << "How fast do you go?? (1: slow, 2: medium, 3: fast!)";
 	int input = 0;
 	while (!(input == 1 || input == 2 || input == 3)) {
 		try {
-			cin >> input;
+			std::cin >> input;
 		}
-		catch (exception e) {
-			cout << "Invalid speed!" << endl;
+		catch (std::exception e) {
+			std::cout << "Invalid speed!\n";
 		}
 		if (!(input == 1 || input == 2 || input == 3)) {
-			cout << "That's not an allowed speed setting, try another! ";
+			std::cout << "That's not an allowed speed setting, try another! ";
 		}
 	}
 	switch (input) {
@@ -78,42 +58,42 @@ void Car::simulator_input(data_car* myCar)
 		break;
 	}
 
-	cout << "How much fuel do you have?? (1: 100%, 2. 80%, 3. 50%) ";
+	std::cout << "How much fuel do you have?? (1: 100%, 2. 80%, 3. 50%) ";
 	input = 0;
 	while (!(input == 1 || input == 2 || input == 3)) {
 		try {
-			cin >> input;
+			std::cin >> input;
 		}
-		catch (exception e) {
-			cout << "Invalid fuel amount!" << endl;
+		catch (std::exception e) {
+			std::cout << "Invalid fuel amount!\n";
 		}
 		if (!(input == 1 || input == 2 || input == 3)) {
-			cout << "That's not an allowed fuel amount, try another! ";
+			std::cout << "That's not an allowed fuel amount, try another! ";
 		}
 	}
 	switch (input) {
 	case 1:
-		myCar->tank_level = 100.0;
+		myCar->tankLevel = 100.0;
 		break;
 	case 2:
-		myCar->tank_level = 80.0;
+		myCar->tankLevel = 80.0;
 		break;
 	case 3:
-		myCar->tank_level = 50.0;
+		myCar->tankLevel = 50.0;
 		break;
 	}
 }
 
-void Car::run_simulator(data_car* myCar)
+void Car::RunSimulator(carData* myCar)
 {
-	while (myCar->tank_level > .01) {
-		cout << "New tank level: " << myCar->tank_level << endl;
-		myCar->tank_level -= myCar->speed * myCar->terrain;
+	while (myCar->tankLevel > .01) {
+		std::cout << "New tank level: " << myCar->tankLevel << "\n";
+		myCar->tankLevel -= myCar->speed * myCar->terrain;
 	}
+	std::cout << "You're out of gas!\n";
 }
 
 int main() {
 	Car car;
 	return 0;
-	
 }
